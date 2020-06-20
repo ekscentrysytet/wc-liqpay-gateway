@@ -8,7 +8,7 @@ function woocommerce_init_liqpay() {
 
     class WC_Gateway_Liqpay extends WC_Payment_Gateway {
 
-        private $_checkout_url          = 'https://www.liqpay.com/api/3/checkout';
+        private $_checkout_url          = 'https://www.liqpay.ua/api/3/checkout';
         protected $_supportedCurrencies = array( 'EUR', 'UAH', 'USD', 'RUB', 'RUR' );
         private $_public_key;
         private $_private_key;
@@ -204,7 +204,7 @@ function woocommerce_init_liqpay() {
                 <form method="POST" id="%s_payment_form" action="%s" accept-charset="utf-8">
                   %s
                   %s
-                  <input type="image" class="liqpay-btn" src="//static.liqpay.com/buttons/p1%s.radius.png" name="btn_text" />
+                  <input type="image" class="liqpay-btn" src="//static.liqpay.ua/buttons/p1%s.radius.png" name="btn_text" />
                 </form>',
                 $this->id,
                 $this->_checkout_url,
