@@ -28,6 +28,7 @@ function woocommerce_init_liqpay() {
             $this->description        =  $this->get_option( 'description' );
             $this->_public_key        =  $this->get_option( 'public_key' );
             $this->_private_key       =  $this->get_option( 'private_key' );
+            $this->fee                =  $this->get_option( 'fee' );
             $this->skip_submit        =  $this->get_option( 'skip_submit' );
             $this->sandbox            =  $this->get_option( 'sandbox' );
             $this->_serverUrl         =  add_query_arg( 'wc-api', 'WC_Gateway_Liqpay', home_url( '/' ) );
@@ -88,6 +89,12 @@ function woocommerce_init_liqpay() {
                     'type'        => 'text',
                     'description' => __( 'Приватный ключ. Получить ключ можно в личном кабинете Liqpay.', 'wc-gateway-liqpay' ),
                 ),
+                'fee' => array(
+                    'title'       => __( 'Удержать комиссию', 'wc-gateway-liqpay' ),
+                    'type'        => 'number',
+					'default'     => '2.75',
+                    'description' => __( 'Размер в процентах удерживаемой с покупателя комиссии за пользование платёжной системы. Укажите отличное от 0 значение, если хотите чтобы после снятия указанного процента вы получили полную сумму заказа.', 'wc-gateway-liqpay' ),
+                ),
                 'sandbox'     => array(
                     'title'       => __( 'Демо оплата', 'wc-gateway-liqpay' ),
                     'type'        => 'checkbox',
@@ -118,6 +125,9 @@ function woocommerce_init_liqpay() {
             $order          = new WC_Order( $order );
             $order_id       = $order->id;
             $amount         = $order->get_total();
+			if (is_numeric($this->fee) && $this->fee > 0) {
+				$amount     = $amount / (1 - $this->fee / 100.0);
+			}
             $products_names = array();
 
             foreach ( $order->get_items() as $order_item ) {
