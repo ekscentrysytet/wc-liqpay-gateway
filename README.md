@@ -1,4 +1,4 @@
-# Woocommerce Liqpay Gateway
+# Wordpress / Woocommerce Liqpay Gateway
 
 Платёжный шлюз Liqpay для Вашего магазина на Woocommerce.
 
